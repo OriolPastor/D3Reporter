@@ -1,0 +1,22 @@
+{
+  "name": "my-designer-plugin",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@disguise-one/designer-pythonapi": "github:disguise-one/designer-pythonapi",
+    "@disguise-one/vue-liveupdate": "github:disguise-one/vue-liveupdate",
+    "pinia": "^3.0.3",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.3",
+    "vite": "^6.3.5"
+  }
+}

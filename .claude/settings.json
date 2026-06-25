@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "deny": [
+      "**/.env",
+      "**/.env.*",
+      "**/.env/**",
+      "**/*.pem",
+      "**/*.key",
+      "**/.ssh/**",
+      "**/.aws/**",
+      "**/.config/gcloud/**",
+      "**/.npmrc",
+      "**/.pypirc",
+      "**/.netrc",
+      "**/secrets/**",
+      "**/credentials/**",
+      "**/*secret*",
+      "**/*credential*"
+    ],
+    "allow": []
+  }
+}

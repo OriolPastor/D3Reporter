@@ -1,0 +1,80 @@
+{
+  "servers": [
+    {
+      "type": "director",
+      "hostname": "192.168.1.50",
+      "averageFPS": 143.9988479920624,
+      "states": []
+    }
+  ],
+  "_directorHostname": "192.168.1.50",
+  "_healthMap": {},
+  "websocketState": "disconnected",
+  "timeline": {
+    "playhead": 31,
+    "activeLayers": [
+      {
+        "name": "AllDirect",
+        "asset": "videos/test_balls.mov"
+      }
+    ],
+    "trackLayers": [
+      {
+        "name": "AnimateCameraControl",
+        "asset": "(No Asset)",
+        "start": "120.00",
+        "end": "135.00",
+        "duration": 15
+      },
+      {
+        "name": "Camera",
+        "asset": "test patterns/d3_color_16-9.png",
+        "start": "120.00",
+        "end": "135.00",
+        "duration": 15
+      },
+      {
+        "name": "Parallel_1",
+        "asset": "(No Asset)",
+        "start": "90.00",
+        "end": "120.00",
+        "duration": 30
+      },
+      {
+        "name": "AllFeed",
+        "asset": "content templates/disguise_training_template_3000x1200.jpg",
+        "start": "60.00",
+        "end": "90.00",
+        "duration": 30
+      },
+      {
+        "name": "AllDirect",
+        "asset": "videos/test_balls.mov",
+        "start": "30.00",
+        "end": "60.00",
+        "duration": 30
+      },
+      {
+        "name": "Pattern_Center",
+        "asset": "(No Asset)",
+        "start": "0.00",
+        "end": "30.00",
+        "duration": 30
+      },
+      {
+        "name": "Pattern_Left",
+        "asset": "(No Asset)",
+        "start": "0.00",
+        "end": "30.00",
+        "duration": 30
+      },
+      {
+        "name": "Pattern_Right",
+        "asset": "(No Asset)",
+        "start": "0.00",
+        "end": "30.00",
+        "duration": 30
+      }
+    ]
+  }
+}

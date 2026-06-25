@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --check scripts/websocket_service.js)",
+      "Bash(xxd)",
+      "Bash(timeout 10 node scripts/websocket_service.js)",
+      "Bash(timeout 15 node scripts/websocket_service.js)",
+      "Bash(npm install *)",
+      "Bash(timeout 20 node scripts/websocket_service.js)",
+      "Bash(node -e \"const b = require\\('bonjour'\\); console.log\\(typeof b, Object.keys\\(b\\)\\)\")",
+      "Bash(node *)",
+      "Bash(python3 *)",
+      "Bash(npx vite *)",
+      "Bash(npm run *)",
+      "Bash(curl *)",
+      "Bash(awk '{print $2}')",
+      "Bash(xargs kill *)",
+      "Bash(pkill -f \"node scripts/websocket_service.js\")",
+      "Bash(xargs -I{} basename {})",
+      "Bash(cp *)",
+      "Bash(chmod +x scripts/build-frontend.sh)",
+      "Bash(bash scripts/build-frontend.sh)",
+      "Bash(node scripts/websocket_service.js)",
+      "Read(//tmp/**)"
+    ]
+  }
+}
