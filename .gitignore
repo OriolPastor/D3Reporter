@@ -3,3 +3,4 @@
 !.env.test
 secrets/
 node_modules/
+frontend/node_modules
