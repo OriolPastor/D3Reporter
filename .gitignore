@@ -1,6 +1,10 @@
 .env
 .env.*
-!.env.test
 secrets/
 node_modules/
 frontend/node_modules
+alert-config.json
+status.json
+.claude/settings.local.json
+disguise-examples/D3TrackReporter/
+disguise-examples/grafana-liveupdate/

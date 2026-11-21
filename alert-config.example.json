@@ -1,0 +1,159 @@
+{
+  "FPS Actual": {
+    "defaults": {
+      "enabled": false,
+      "warning": 50,
+      "critical": 30,
+      "webhook": false
+    },
+    "actual": {
+      "enabled": false,
+      "warning": 50,
+      "critical": 30,
+      "webhook": false
+    }
+  },
+  "GPU Load": {
+    "defaults": {
+      "enabled": false,
+      "warning": 80,
+      "critical": 90,
+      "webhook": false
+    },
+    "actual": {
+      "enabled": false,
+      "warning": 80,
+      "critical": 90,
+      "webhook": false
+    }
+  },
+  "GPU Compositor": {
+    "defaults": {
+      "enabled": false,
+      "warning": 5,
+      "critical": 10,
+      "webhook": false
+    },
+    "actual": {
+      "enabled": false,
+      "warning": 5,
+      "critical": 10,
+      "webhook": false
+    }
+  },
+  "GPU GUI": {
+    "defaults": {
+      "enabled": false,
+      "warning": 5,
+      "critical": 10,
+      "webhook": false
+    },
+    "actual": {
+      "enabled": false,
+      "warning": 5,
+      "critical": 10,
+      "webhook": false
+    }
+  },
+  "GPU Render Everything": {
+    "defaults": {
+      "enabled": false,
+      "warning": 10,
+      "critical": 20,
+      "webhook": false
+    },
+    "actual": {
+      "enabled": false,
+      "warning": 10,
+      "critical": 20,
+      "webhook": false
+    }
+  },
+  "CPU Time": {
+    "defaults": {
+      "enabled": false,
+      "warning": 80,
+      "critical": 90,
+      "webhook": false
+    },
+    "actual": {
+      "enabled": false,
+      "warning": 80,
+      "critical": 90,
+      "webhook": false
+    }
+  },
+  "GPU Time": {
+    "defaults": {
+      "enabled": false,
+      "warning": 70,
+      "critical": 90,
+      "webhook": false
+    },
+    "actual": {
+      "enabled": false,
+      "warning": 70,
+      "critical": 90,
+      "webhook": false
+    }
+  },
+  "Process Memory Usage": {
+    "defaults": {
+      "enabled": false,
+      "warning": 8000,
+      "critical": 12000,
+      "webhook": false
+    },
+    "actual": {
+      "enabled": false,
+      "warning": 8000,
+      "critical": 12000,
+      "webhook": false
+    }
+  },
+  "GPU Memory": {
+    "defaults": {
+      "enabled": false,
+      "warning": 70,
+      "critical": 90,
+      "webhook": false
+    },
+    "actual": {
+      "enabled": false,
+      "warning": 70,
+      "critical": 90,
+      "webhook": false
+    }
+  },
+  "Disk Read": {
+    "defaults": {
+      "enabled": false,
+      "warning": 2500,
+      "critical": 3000,
+      "webhook": false
+    },
+    "actual": {
+      "enabled": false,
+      "warning": 2500,
+      "critical": 3000,
+      "webhook": false
+    }
+  },
+  "Disk Write": {
+    "defaults": {
+      "enabled": false,
+      "warning": 2500,
+      "critical": 3000,
+      "webhook": false
+    },
+    "actual": {
+      "enabled": false,
+      "warning": 2500,
+      "critical": 3000,
+      "webhook": false
+    }
+  },
+  "webhookUrl": "https://api.telegram.org/botTU_BOT_ID:TU_TOKEN_AQUI/sendMessage",
+  "webhookChatId": "TU_CHAT_ID",
+  "webhookEnabled": false
+}
