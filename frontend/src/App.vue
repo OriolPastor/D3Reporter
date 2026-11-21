@@ -1,7 +1,6 @@
 <script setup>
-import { useLiveUpdate } from '@disguise-one/vue-liveupdate';
 import { computed, ref, watch } from 'vue';
-import CurrentPlayhead from './components/CurrentPlayhead.vue';
+import { useLiveUpdate } from '@disguise-one/vue-liveupdate';
 
 // Access stored IP address, fallback to build-time env
 const storedIP = localStorage.getItem('directorEndpoint')
@@ -9,13 +8,13 @@ const defaultEndpoint = `${import.meta.env.VITE_DIRECTOR_HOST || 'localhost'}:${
 const endpointInput = ref(storedIP || defaultEndpoint)
 
 // Save IP address when changed
-watch(endpointInput,(newIP) => {
+watch(endpointInput, (newIP) => {
   localStorage.setItem('directorEndpoint', newIP)
-  console.log('Saved to localStorage:', newIP)
 })
 
-// Initialize liveUpdate directly
+// Direct connection to Director via @disguise-one/vue-liveupdate
 const liveUpdate = useLiveUpdate(endpointInput.value)
+
 
 // Reconnect logic with new endpoint
 function localReconnect() {
@@ -24,9 +23,28 @@ function localReconnect() {
 }
 
 watch(endpointInput, (newVal) => {
-  console.log('Updated endpointInput:', newVal)
+  // if (import.meta.env.DEV) console.log('Updated endpointInput:', newVal)
 })
-console.log('Target IP:', endpointInput.value)
+
+// if (import.meta.env.DEV) console.log('Target IP:', endpointInput.value);
+
+// --- Debug panel (dev only) ---
+const debugOpen = ref(false)
+const isDev = import.meta.env.DEV
+const debugInfo = computed(() => liveUpdate.debugInfo?.value ?? {})
+const allValues = computed(() => {
+  if (!debugInfo.value?.values) return {}
+  return debugInfo.value.values
+})
+const allSubscriptions = computed(() => {
+  if (!debugInfo.value?.subscriptions?.value) return []
+  return debugInfo.value.subscriptions.value
+})
+
+if (import.meta.env.DEV) {
+  window.__liveUpdate = liveUpdate
+  // console.log('[D3Reporter] liveUpdate instance exposed as window.__liveUpdate')
+}
 
 //Connection status display and classing
 const connectionStatus = computed(() => {
@@ -47,11 +65,12 @@ const connectionStatusClass = computed(() => {
 <template>
   <div class="app">
     <header>
-      <h1>CT Disguise Monitoring</h1>
+      <h1>Disguise Reporter</h1>
+      <span :class="[connectionStatusClass, 'status-text']" v-if="connectionStatus === 'OPEN'">CONNECTED</span>
       <nav class="nav-links">
-        <router-link to="/current-video-assets">Current Video Assets</router-link> |
         <router-link to="/track-detail">Track Details</router-link> |
-        <router-link to="/play-logger">Play Logger</router-link>
+        <router-link to="/timeline">Timeline</router-link> |
+        <router-link to="/metrics">Metrics</router-link>
       </nav>
     </header>
     <div v-if="connectionStatus !== 'OPEN'" class="modal-overlay">
@@ -62,8 +81,6 @@ const connectionStatusClass = computed(() => {
         <button class="button-connect" @click="localReconnect">Reconnect</button>
       </div>
     </div>
-    <!-- Always visible component -->
-    <CurrentPlayhead :liveUpdate="liveUpdate" />
     <!-- Routed content view -->
     <main>
       <router-view v-slot="{ Component }">
@@ -73,44 +90,57 @@ const connectionStatusClass = computed(() => {
       <!--<LiveUpdateOverlay class="overlay-ui" :liveUpdate="liveUpdate" />-->
     </main>
     <footer>
-      <div class="status-bar">
-        Connection Status:
-        <span :class="connectionStatusClass">{{ connectionStatus }}</span>
-      </div>
-      <a href="https://ctus.com" target="_blank">
-        <img src="./assets/ctlogo.png" class="logo" alt="CT logo" />
+      <a href="https://www.disguise.one/en" target="_blank">
+        <img src="./assets/logo.svg" class="logo" alt="Disguise logo" />
       </a>
+      <!-- Debug panel (dev only) -->
+      <details v-if="isDev" class="debug-panel" :open="debugOpen">
+        <summary style="cursor:pointer;font-weight:bold;font-size:0.8rem;">Debug</summary>
+        <div class="debug-content">
+          <div>Status: <strong>{{ connectionStatus }}</strong></div>
+           <div>Subscriptions: {{ allSubscriptions.length }}</div>
+          <pre>{{ JSON.stringify(allValues, null, 2) }}</pre>
+        </div>
+      </details>
     </footer>
   </div>
 </template>
 
 <style scoped>
 .logo {
-  height: 6em;
+  width: 8em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #e8c442d3);
+  filter: drop-shadow(0 0 2em #888888dd);
+}
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
 }
 .nav-links {
-  box-shadow: 0px 1px 0px 0px #fff6af;
-	background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
-	background-color:#ffec64;
-	border-radius:15px;
-	border:2px solid #ffaa22;
-	display:inline-block;
-	color:#333333;
-	font-family:Arial;
-	font-size:16px;
-	font-weight:bold;
-	padding:12px 16px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #ffffff;
+  margin-top: 0.5rem;
+  box-shadow: 0px 1px 0px 0px #c0c0c0;
+		background:linear-gradient(to bottom, #b0b0b0 5%, #6b6b6b 100%);
+		background-color:#b0b0b0;
+		border-radius:15px;
+		border:2px solid #555555;
+		display:inline-block;
+		color:#ffffff;
+		font-family:Arial;
+		font-size:16px;
+		font-weight:bold;
+		padding:12px 16px;
+		text-decoration:none;
+		text-shadow:0px 1px 0px #333333;
 }
 .nav-links a {
-  color: #333;
+  color: #fff;
   text-decoration: none;
   margin: 0 0.5rem;
 }
@@ -118,12 +148,12 @@ const connectionStatusClass = computed(() => {
   text-decoration: underline;
 }
 .nav-links a.router-link-active {
-  color: #000;
+  color: #ffffff;
   font-weight: bold;
   font-size: 18px;
 }
 .app {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
 }
@@ -132,6 +162,11 @@ const connectionStatusClass = computed(() => {
 }
 .status-connected {
   color: green;
+}
+.status-text {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.75rem;
 }
 .status-connecting {
   color: orange;
@@ -190,5 +225,27 @@ const connectionStatusClass = computed(() => {
 .status-bar {
   margin-top: 1rem;
   font-weight: bold;
+}
+.debug-panel {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background: #1a1a1a;
+  border: 1px solid #444;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-family: monospace;
+}
+.debug-content {
+  margin-top: 0.5rem;
+  color: #0f0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.debug-content pre {
+  background: #000;
+  padding: 0.5rem;
+  border-radius: 2px;
+  max-height: 200px;
+  overflow: auto;
 }
 </style>

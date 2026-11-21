@@ -8,39 +8,36 @@
 </template>
 
 <script setup>
-import { computed, watchEffect } from 'vue';
-import { useLiveUpdateStore } from '../stores/liveUpdateStore';
-    const props = defineProps({
-        liveUpdate: {
-            type: Object,
-            required: true
-        }
-    });
-    // Subscribe to the current playhead position
-    const { currentPlayhead } = props.liveUpdate.subscribe('GuiSystem.currentTransportManager', {
-        currentPlayhead: 'object.player.tRender'
-    })
+import { computed, onMounted, ref } from 'vue';
+import { usePlayhead } from '../composables/usePlayhead';
 
-    const store = useLiveUpdateStore()
-
-    watchEffect(() => {
-        if (typeof currentPlayhead?.value === 'number') {
-            store.updatePlayhead(currentPlayhead.value)
-        }
-    })
-
-    // Helper function: seconds to mm:ss
-    function formatSecondsToTime(seconds) {
-        if (typeof seconds !== 'number' || isNaN(seconds)) return '00:00'
-        const mins = Math.floor(seconds / 60)
-        const secs = Math.floor(seconds % 60)
-        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+const props = defineProps({
+    liveUpdate: {
+        type: Object,
+        required: true
     }
+});
 
-    const formattedPlayhead = computed (() => {
-        const val = currentPlayhead?.value
-        return formatSecondsToTime(val)
-    })
+const playhead = usePlayhead();
+
+function formatTimecode(seconds) {
+    if (typeof seconds !== 'number' || isNaN(seconds)) return '00:00:00:00'
+    const h = Math.floor(seconds / 3600)
+    const m = Math.floor((seconds % 3600) / 60)
+    const s = Math.floor(seconds % 60)
+    const fps = 60
+    const frame = Math.floor(((seconds % 1) * fps) % fps)
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}:${String(frame).padStart(2, '0')}`
+}
+
+const formattedPlayhead = computed(() => {
+    const val = playhead.value.value
+    return formatTimecode(val)
+})
+
+onMounted(() => {
+    playhead.subscribe(props.liveUpdate);
+});
 </script>
 
 <style scoped>

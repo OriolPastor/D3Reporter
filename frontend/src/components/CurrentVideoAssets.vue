@@ -21,6 +21,10 @@
         liveUpdate: {
             type: Object,
             required: true
+        },
+        playhead: {
+            type: Object,
+            default: null
         }
     })
 

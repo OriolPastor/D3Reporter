@@ -11,8 +11,11 @@
   "dependencies": {
     "@disguise-one/designer-pythonapi": "github:disguise-one/designer-pythonapi",
     "@disguise-one/vue-liveupdate": "github:disguise-one/vue-liveupdate",
+    "echarts": "^6.1.0",
+    "lodash": "^4.18.1",
     "pinia": "^3.0.3",
     "vue": "^3.5.13",
+    "vue-echarts": "^8.0.1",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {

@@ -1,0 +1,56 @@
+diff --git a/node_modules/@disguise-one/vue-liveupdate/README.md b/node_modules/@disguise-one/vue-liveupdate/README.md
+old mode 100644
+new mode 100755
+diff --git a/node_modules/@disguise-one/vue-liveupdate/dist/index.d.ts b/node_modules/@disguise-one/vue-liveupdate/dist/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/@disguise-one/vue-liveupdate/dist/vue-liveupdate.esm.js b/node_modules/@disguise-one/vue-liveupdate/dist/vue-liveupdate.esm.js
+old mode 100644
+new mode 100755
+index d6a6656..45025dc
+--- a/node_modules/@disguise-one/vue-liveupdate/dist/vue-liveupdate.esm.js
++++ b/node_modules/@disguise-one/vue-liveupdate/dist/vue-liveupdate.esm.js
+@@ -17,7 +17,7 @@ function useLiveUpdate(director) {
+     // Initialize the WebSocket connection & provide reactive data.
+     const socketUrl = `ws://${director}/api/session/liveupdate`;
+     const { status, data, send, open, ws } = useWebSocket(socketUrl, {
+-        autoConnect: false
++        autoConnect: true
+     });
+ 
+     const connectionUserInfo = ref('');
+@@ -80,7 +80,8 @@ function useLiveUpdate(director) {
+         const msg = {
+             subscribe: {
+                 object: objectPath,
+-                properties
++                properties,
++                configuration: { updateFrequencyMs: 100 }
+             }
+         };
+         send(JSON.stringify(msg));
+@@ -215,7 +216,8 @@ function useLiveUpdate(director) {
+         debugInfo: {
+             status,
+             subscriptions,
+-            values: keyToValue
++            values: keyToValue,
++            ws
+         }
+     };
+ }
+diff --git a/node_modules/@disguise-one/vue-liveupdate/dist/vue-liveupdate.umd.js b/node_modules/@disguise-one/vue-liveupdate/dist/vue-liveupdate.umd.js
+old mode 100644
+new mode 100755
+index 0e8ca04..a7f2159
+--- a/node_modules/@disguise-one/vue-liveupdate/dist/vue-liveupdate.umd.js
++++ b/node_modules/@disguise-one/vue-liveupdate/dist/vue-liveupdate.umd.js
+@@ -20,7 +20,7 @@
+         // Initialize the WebSocket connection & provide reactive data.
+         const socketUrl = `ws://${director}/api/session/liveupdate`;
+         const { status, data, send, open, ws } = core.useWebSocket(socketUrl, {
+-            autoConnect: false
++            autoConnect: true
+         });
+ 
+         const connectionUserInfo = vue.ref('');
